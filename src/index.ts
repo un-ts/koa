@@ -7,6 +7,7 @@ import * as _debug from 'debug'
 import { injectAllRoutes } from '../lib'
 
 import './common-controller'
+import './methods-controller'
 import './user-controller'
 
 const debug = _debug('1stg:server')
