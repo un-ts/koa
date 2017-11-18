@@ -1,7 +1,31 @@
 import * as KoaRouter from 'koa-router'
 
-export const Controller = (router: KoaRouter) => target => {
-  target.prototype.routes.forEach(({ handler, method, path }) => router[method](path, handler))
+const routesList = []
+
+export const injectAllRoutes = (router: KoaRouter) => {
+  if (!router || !(router instanceof KoaRouter)) {
+    throw new ReferenceError('no Koa Router instance passed in')
+  }
+
+  while (routesList.length) {
+    const routes = routesList.shift()
+
+    routes.forEach(({ handler, method, path = '' }) => {
+      if (typeof path !== 'string') {
+        throw new ReferenceError('route path should be string')
+      }
+
+      if (routes.path) {
+        path = routes.path + path
+      }
+
+      router[method || MethodMap[Method.GET]](path, handler)
+    })
+  }
+}
+
+export const Controller = target => {
+  routesList.push(target.prototype._routes)
 }
 
 export enum Method {
@@ -31,32 +55,44 @@ export interface RequestMap {
   consumes?: string[]
   headers?: string[]
   method?: Method
-  path: string
+  path?: string
 }
 
 function RequestMapping(requestMap: RequestMap)
 function RequestMapping(path: string, method?: Method)
-function RequestMapping(path: string | RequestMap, method: Method = Method.GET) {
-  let requestMap
+function RequestMapping(path: string | RequestMap, method?: Method) {
   if (typeof path === 'string') {
-    requestMap = {
+    path = {
       method,
       path
     }
   } else if (method !== undefined) {
-    throw new TypeError()
+    throw new ReferenceError('method should not be passed in')
   }
+
+  const requestMap: RequestMap = path
+  const requestMethod = requestMap.method
+  const requestPath = requestMap.path
+
   return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
+    target = propertyKey ? target : target.prototype
+
+    if (!target._routes) {
+      target._routes = []
+    }
+
     if (propertyKey) {
-      if (!target.routes) {
-        target.routes = []
+      target._routes.push({
+        handler: descriptor.value,
+        method: MethodMap[requestMethod],
+        path: requestPath
+      })
+    } else {
+      if (requestMethod) {
+        target._routes.forEach(route => (route.method = route.method || MethodMap[requestMethod]))
       }
 
-      target.routes.push({
-        handler: descriptor.value,
-        method: MethodMap[requestMap.method],
-        path: requestMap.path
-      })
+      target._routes.path = requestPath
     }
   }
 }

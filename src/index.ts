@@ -3,7 +3,10 @@ import * as KoaRouter from 'koa-router'
 
 import * as _debug from 'debug'
 
-import userController from './user-controller'
+import { injectAllRoutes } from '../lib'
+
+import './common-controller'
+import './user-controller'
 
 const debug = _debug('1stg:server')
 
@@ -11,7 +14,7 @@ const app = new Koa()
 
 const router = new KoaRouter()
 
-userController(router)
+injectAllRoutes(router)
 
 app.use(router.routes())
 app.use(router.allowedMethods())
