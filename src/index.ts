@@ -1,5 +1,6 @@
 import * as Koa from 'koa'
 import * as KoaRouter from 'koa-router'
+import * as KoaSession from 'koa-session'
 
 import * as _debug from 'debug'
 
@@ -11,6 +12,10 @@ import './user-controller'
 const debug = _debug('1stg:server')
 
 const app = new Koa()
+
+app.keys = ['secret']
+
+app.use(KoaSession(app))
 
 const router = new KoaRouter()
 

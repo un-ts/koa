@@ -19,7 +19,9 @@ export const injectAllRoutes = (router: KoaRouter) => {
         path = routes.path + path
       }
 
-      router[method || MethodMap[Method.GET]](path, handler)
+      handler = Array.isArray(handler) ? handler : [handler]
+
+      router[method || MethodMap[Method.GET]](path, ...handler)
     })
   }
 }
@@ -58,9 +60,9 @@ export interface RequestMap {
   path?: string
 }
 
-function RequestMapping(requestMap: RequestMap)
-function RequestMapping(path: string, method?: Method)
-function RequestMapping(path: string | RequestMap, method?: Method) {
+function RequestMapping(requestMap?: RequestMap)
+function RequestMapping(path?: string, method?: Method)
+function RequestMapping(path?: string | RequestMap, method?: Method) {
   if (typeof path === 'string') {
     path = {
       method,
@@ -70,7 +72,7 @@ function RequestMapping(path: string | RequestMap, method?: Method) {
     throw new ReferenceError('method should not be passed in')
   }
 
-  const requestMap: RequestMap = path
+  const requestMap: RequestMap = path || {}
   const requestMethod = requestMap.method
   const requestPath = requestMap.path
 
