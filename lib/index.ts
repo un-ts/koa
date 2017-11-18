@@ -2,6 +2,8 @@ import * as KoaRouter from 'koa-router'
 
 const routesList = []
 
+export type Path = string | RegExp
+
 export const injectAllRoutes = (router: KoaRouter) => {
   if (!router || !(router instanceof KoaRouter)) {
     throw new ReferenceError('no Koa Router instance passed in')
@@ -11,11 +13,7 @@ export const injectAllRoutes = (router: KoaRouter) => {
     const routes = routesList.shift()
 
     routes.forEach(({ handler, method, path = '' }) => {
-      if (typeof path !== 'string') {
-        throw new ReferenceError('route path should be string')
-      }
-
-      if (routes.path) {
+      if (routes.path && typeof path === 'string') {
         path = routes.path + path
       }
 
@@ -57,13 +55,13 @@ export interface RequestMap {
   consumes?: string[]
   headers?: string[]
   method?: Method
-  path?: string
+  path?: Path
 }
 
 function RequestMapping(requestMap?: RequestMap)
-function RequestMapping(path?: string, method?: Method)
-function RequestMapping(path?: string | RequestMap, method?: Method) {
-  if (typeof path === 'string') {
+function RequestMapping(path?: Path, method?: Method)
+function RequestMapping(path?: Path | RequestMap, method?: Method) {
+  if (typeof path === 'string' || path instanceof RegExp) {
     path = {
       method,
       path
