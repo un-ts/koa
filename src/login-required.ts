@@ -1,11 +1,14 @@
+import { RoutesKey } from '../lib'
+
 export const LoginRequired = (target, propertyKey: string, descriptor: PropertyDescriptor) => {
   target = propertyKey ? target : target.prototype
 
-  if (!target._routes) {
+  const routes = target[RoutesKey]
+
+  if (!routes) {
     throw new ReferenceError('no routes found')
   }
 
-  const routes = target._routes
   let handler = descriptor.value
 
   const index = routes.findIndex(route => {

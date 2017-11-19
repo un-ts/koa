@@ -27,6 +27,8 @@ const MethodMap = {
 
 export type Path = string | RegExp
 
+export const RoutesKey = Symbol('routes')
+
 export const injectAllRoutes = (router: KoaRouter) => {
   if (!router || !(router instanceof KoaRouter)) {
     throw new ReferenceError('no Koa Router instance passed in')
@@ -48,7 +50,7 @@ export const injectAllRoutes = (router: KoaRouter) => {
 }
 
 export const Controller = target => {
-  routesList.push(target.prototype._routes)
+  routesList.push(target.prototype[RoutesKey])
 }
 
 export interface RequestMap {
@@ -81,22 +83,24 @@ function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]) {
   return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
     target = propertyKey ? target : target.prototype
 
-    if (!target._routes) {
-      target._routes = []
+    if (!target[RoutesKey]) {
+      target[RoutesKey] = []
     }
 
+    const routes = target[RoutesKey]
+
     if (propertyKey) {
-      target._routes.push({
+      routes.push({
         handler: descriptor.value,
         method: methods,
         path: requestPath
       })
     } else {
       if (requestMethod) {
-        target._routes.forEach(route => (route.method = route.method || methods))
+        routes.forEach(route => (route.method = route.method || methods))
       }
 
-      target._routes.path = requestPath
+      routes.path = requestPath
     }
   }
 }
