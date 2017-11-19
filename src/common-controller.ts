@@ -7,10 +7,7 @@ import { Controller, Method, RequestMapping } from '../lib'
   method: Method.POST
 })
 export class CommonController {
-  @RequestMapping({
-    method: Method.GET,
-    path: '/'
-  })
+  @RequestMapping('/', Method.GET)
   public helloWorld(ctx: Context) {
     ctx.body = 'Hello World'
   }

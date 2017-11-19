@@ -42,10 +42,6 @@ type Router = KoaRouter & {
 }
 
 export const injectAllRoutes = (router: KoaRouter) => {
-  if (!(router instanceof KoaRouter)) {
-    throw new ReferenceError('no Koa Router instance passed in')
-  }
-
   while (routesList.length) {
     const routes = routesList.shift()
 
@@ -72,7 +68,7 @@ export interface RequestMap {
   path?: Path
 }
 
-function RequestMapping(requestMap?: RequestMap): any
+function RequestMapping(requestMap: RequestMap): any
 function RequestMapping(path?: Path, method?: Method | Method[]): any
 function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]): any {
   if (typeof path === 'string' || path instanceof RegExp) {
@@ -81,7 +77,8 @@ function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]): a
       path
     }
   } else if (method !== undefined) {
-    throw new ReferenceError('method should not be passed in')
+    // tslint:disable-next-line no-console
+    console.warn('method should not be passed in')
   }
 
   const requestMap: RequestMap = path || {}
@@ -109,7 +106,7 @@ function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]): a
       })
     } else {
       if (requestMethod) {
-        routes.forEach(route => (route.method = route.method || methods))
+        routes.forEach(route => (route.method = route.method[0] ? route.method : methods))
       }
 
       routes.path = requestPath as string
