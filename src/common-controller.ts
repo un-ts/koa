@@ -1,3 +1,5 @@
+import { Context } from 'koa'
+
 import { Controller, Method, RequestMapping } from '../lib'
 
 @Controller
@@ -9,7 +11,7 @@ export class CommonController {
     method: Method.GET,
     path: '/'
   })
-  public helloWorld(ctx) {
+  public helloWorld(ctx: Context) {
     ctx.body = 'Hello World'
   }
 
@@ -17,7 +19,7 @@ export class CommonController {
     method: Method.GET,
     path: /^\/\d{3}$/
   })
-  public testRegExp(ctx) {
+  public testRegExp(ctx: Context) {
     ctx.body = ctx.url
   }
 }

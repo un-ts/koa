@@ -1,6 +1,15 @@
+import { Middleware } from 'koa'
 import * as KoaRouter from 'koa-router'
 
-const routesList = []
+export interface Route {
+  handler: Middleware | Middleware[]
+  method: string[]
+  path: Path
+}
+
+export type Routes = Route[] & { path: string }
+
+const routesList: Routes[] = []
 
 export enum Method {
   ALL,
@@ -21,16 +30,19 @@ const MethodMap = {
   [Method.OPTIONS]: 'options',
   [Method.PATCH]: 'patch',
   [Method.POST]: 'post',
-  [Method.PUT]: 'put',
-  [Method.HEAD]: 'head'
+  [Method.PUT]: 'put'
 }
 
 export type Path = string | RegExp
 
 export const RoutesKey = Symbol('routes')
 
+type Router = KoaRouter & {
+  [key: string]: any
+}
+
 export const injectAllRoutes = (router: KoaRouter) => {
-  if (!router || !(router instanceof KoaRouter)) {
+  if (!(router instanceof KoaRouter)) {
     throw new ReferenceError('no Koa Router instance passed in')
   }
 
@@ -44,12 +56,12 @@ export const injectAllRoutes = (router: KoaRouter) => {
 
       handler = Array.isArray(handler) ? handler : [handler]
 
-      method.forEach(m => router[m || MethodMap[Method.GET]](path, ...handler))
+      method.forEach(m => (router as Router)[m || MethodMap[Method.GET]](path, ...(handler as Middleware[])))
     })
   }
 }
 
-export const Controller = target => {
+export const Controller = (target: any) => {
   routesList.push(target.prototype[RoutesKey])
 }
 
@@ -60,9 +72,9 @@ export interface RequestMap {
   path?: Path
 }
 
-function RequestMapping(requestMap?: RequestMap)
-function RequestMapping(path?: Path, method?: Method | Method[])
-function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]) {
+function RequestMapping(requestMap?: RequestMap): any
+function RequestMapping(path?: Path, method?: Method | Method[]): any
+function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]): any {
   if (typeof path === 'string' || path instanceof RegExp) {
     path = {
       method,
@@ -80,14 +92,14 @@ function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]) {
 
   const requestPath = requestMap.path
 
-  return (target, propertyKey: string, descriptor: PropertyDescriptor) => {
+  return (target: any, propertyKey: string, descriptor: PropertyDescriptor): void => {
     target = propertyKey ? target : target.prototype
 
     if (!target[RoutesKey]) {
       target[RoutesKey] = []
     }
 
-    const routes = target[RoutesKey]
+    const routes: Routes = target[RoutesKey]
 
     if (propertyKey) {
       routes.push({
@@ -100,7 +112,7 @@ function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]) {
         routes.forEach(route => (route.method = route.method || methods))
       }
 
-      routes.path = requestPath
+      routes.path = requestPath as string
     }
   }
 }
