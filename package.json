@@ -1,7 +1,8 @@
 {
   "name": "koa-router-decorators",
   "version": "0.0.1",
-  "description": "Decorators for koa-router, inspired by Java Annotations of Spring MVC framework",
+  "description":
+    "Decorators for koa-router, inspired by Java Annotations of Spring MVC framework",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "repository": "git@github.com:JounQin/koa-router-decorators.git",
@@ -24,9 +25,9 @@
     "watch": ["lib/*.*", "src/*.*"]
   },
   "prettier": {
-    "printWidth": 120,
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "all"
   },
   "peerDependencies": {
     "@types/koa": "^2.0.40",
@@ -37,24 +38,24 @@
   },
   "devDependencies": {
     "@types/debug": "^0.0.30",
-    "@types/koa": "^2.0.40",
-    "@types/koa-router": "^7.0.25",
+    "@types/koa": "^2.0.41",
+    "@types/koa-router": "^7.0.26",
     "@types/koa-session": "^3.0.6",
     "@types/node": "^8.0.53",
-    "concurrently": "^3.5.0",
+    "concurrently": "^3.5.1",
     "cross-env": "^5.1.1",
     "debug": "^3.1.0",
     "husky": "^0.14.3",
     "koa": "^2.4.1",
     "koa-router": "^7.3.0",
     "koa-session": "^5.5.1",
-    "lint-staged": "^5.0.0",
+    "lint-staged": "^6.0.0",
     "nodemon": "^1.12.1",
     "prettier": "^1.8.2",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.6.0",
     "tslint-plugin-prettier": "^1.3.0",
-    "typescript": "^2.6.1"
+    "typescript": "^2.6.2"
   }
 }

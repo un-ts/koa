@@ -4,7 +4,7 @@ import { Controller, Method, RequestMapping } from '../lib'
 
 @Controller
 @RequestMapping({
-  method: Method.POST
+  method: Method.POST,
 })
 export class CommonController {
   @RequestMapping('/', Method.GET)
@@ -14,7 +14,7 @@ export class CommonController {
 
   @RequestMapping({
     method: Method.GET,
-    path: /^\/\d{3}$/
+    path: /^\/\d{3}$/,
   })
   public testRegExp(ctx: Context) {
     ctx.body = ctx.url

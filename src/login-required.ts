@@ -1,7 +1,11 @@
 import { Context } from 'koa'
 import { Routes, RoutesKey } from '../lib'
 
-export const LoginRequired = (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+export const LoginRequired = (
+  target: any,
+  propertyKey: string,
+  descriptor: PropertyDescriptor,
+) => {
   target = propertyKey ? target : target.prototype
 
   const routes: Routes = target[RoutesKey]
@@ -14,7 +18,9 @@ export const LoginRequired = (target: any, propertyKey: string, descriptor: Prop
 
   const index = routes.findIndex(route => {
     const routeHandler = route.handler
-    return Array.isArray(routeHandler) ? routeHandler.includes(handler) : routeHandler === handler
+    return Array.isArray(routeHandler)
+      ? routeHandler.includes(handler)
+      : routeHandler === handler
   })
 
   const oldHandler = routes[index].handler
@@ -29,6 +35,6 @@ export const LoginRequired = (target: any, propertyKey: string, descriptor: Prop
 
       next()
     },
-    ...handler
+    ...handler,
   ]
 }

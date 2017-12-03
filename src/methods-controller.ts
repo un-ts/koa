@@ -6,7 +6,7 @@ import { Controller, Method, RequestMapping } from '../lib'
 export class MethodsController {
   @RequestMapping({
     method: [Method.GET, Method.POST],
-    path: '/methods'
+    path: '/methods',
   })
   public methods(ctx: Context) {
     ctx.body = 'methods'
