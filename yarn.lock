@@ -78,10 +78,11 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa-session@^5.7.1":
-  version "5.7.1"
-  resolved "https://registry.yarnpkg.com/@types/koa-session/-/koa-session-5.7.1.tgz#34cd5f7c6cd208be4936b9e76c1fe311d18d5efb"
+"@types/koa-session@^5.10.1":
+  version "5.10.1"
+  resolved "https://registry.yarnpkg.com/@types/koa-session/-/koa-session-5.10.1.tgz#f9de25e9e67a0d923f85c2eca51700ffccb4db77"
   dependencies:
+    "@types/cookies" "*"
     "@types/koa" "*"
 
 "@types/koa@*", "@types/koa@^2.0.41":
