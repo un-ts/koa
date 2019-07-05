@@ -41,7 +41,7 @@
     "@types/koa": "^2.0.41",
     "@types/koa-router": "^7.0.26",
     "@types/koa-session": "^5.7.1",
-    "@types/node": "^10.0.3",
+    "@types/node": "^12.0.12",
     "concurrently": "^4.0.0",
     "cross-env": "^5.1.1",
     "debug": "^3.1.0",
