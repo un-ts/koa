@@ -37,7 +37,7 @@
     "typescript": "^2.6.1"
   },
   "devDependencies": {
-    "@types/debug": "^0.0.30",
+    "@types/debug": "^4.1.4",
     "@types/koa": "^2.0.41",
     "@types/koa-router": "^7.0.26",
     "@types/koa-session": "^5.7.1",
