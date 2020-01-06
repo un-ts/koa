@@ -2,7 +2,7 @@
 
 [![GitHub Actions](https://github.com/rx-ts/koa-router-decorators/workflows/Node%20CI/badge.svg)](https://github.com/rx-ts/koa-router-decorators/actions?query=workflow%3A%22Node+CI%22)
 [![Codacy Grade](https://img.shields.io/codacy/grade/79e162c70dfd46d0bdb802e4c4d54f12)](https://www.codacy.com/gh/rx-ts/koa-router-decorators)
-[![npm](https://img.shields.io/npm/v/rxts/koa-router-decorators.svg)](https://www.npmjs.com/package/@rxts/koa-router-decorators)
+[![npm](https://img.shields.io/npm/v/@rxts/koa-router-decorators.svg)](https://www.npmjs.com/package/@rxts/koa-router-decorators)
 [![GitHub Release](https://img.shields.io/github/release/rx-ts/koa-router-decorators)](https://github.com/rx-ts/koa-router-decorators/releases)
 
 [![David Peer](https://img.shields.io/david/peer/rx-ts/koa-router-decorators.svg)](https://david-dm.org/rx-ts/koa-router-decorators?type=peer)
