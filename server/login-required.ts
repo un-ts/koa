@@ -1,14 +1,15 @@
 import { Context } from 'koa'
-import { Routes, RoutesKey } from '../lib'
+
+import { Routes, RoutesKey, Target } from '..'
 
 export const LoginRequired = (
-  target: any,
+  target: Target,
   propertyKey: string,
   descriptor: PropertyDescriptor,
 ) => {
   target = propertyKey ? target : target.prototype
 
-  const routes: Routes = target[RoutesKey]
+  const routes: Routes | undefined = target[RoutesKey]
 
   if (!routes) {
     throw new ReferenceError('no routes found')
@@ -29,7 +30,7 @@ export const LoginRequired = (
 
   routes[index].handler = [
     (ctx: Context, next: () => void) => {
-      if (!ctx.session.user) {
+      if (!ctx.session!.user) {
         return ctx.redirect('/user/login')
       }
 

@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "declaration": true,
-    "experimentalDecorators": true,
-    "lib": ["esnext"],
-    "moduleResolution": "node",
-    "target": "es5"
-  }
-}

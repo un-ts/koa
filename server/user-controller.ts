@@ -1,18 +1,18 @@
 import { Context } from 'koa'
 
-import { Controller, RequestMapping } from '../lib'
-
 import { LoginRequired } from './login-required'
+
+import { Controller, RequestMapping } from '..'
 
 @Controller
 @RequestMapping('/user')
 export class UserController {
   @RequestMapping('/login')
-  public login(ctx: Context) {
+  login(ctx: Context) {
     const { user } = ctx.query
 
     if (user) {
-      ctx.session.user = user
+      ctx.session!.user = user
       return ctx.redirect('/user/logon')
     }
 
@@ -20,19 +20,19 @@ export class UserController {
   }
 
   @RequestMapping('/logout')
-  public logout(ctx: Context) {
-    ctx.session.user = null
+  logout(ctx: Context) {
+    ctx.session!.user = null
     ctx.redirect('/user')
   }
 
   @RequestMapping()
-  public helloUser(ctx: Context) {
-    ctx.body = `Hello ${ctx.session.user || 'User'}!`
+  helloUser(ctx: Context) {
+    ctx.body = `Hello ${ctx.session!.user || 'User'}!`
   }
 
   @LoginRequired
   @RequestMapping('/logon')
-  public test(ctx: Context) {
-    ctx.body = ctx.session.user + ' is logon'
+  test(ctx: Context) {
+    ctx.body = String(ctx.session!.user) + ' is logon'
   }
 }

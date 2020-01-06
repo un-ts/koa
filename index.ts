@@ -1,11 +1,14 @@
 import { Middleware } from 'koa'
-import * as KoaRouter from 'koa-router'
+import KoaRouter from 'koa-router'
 
 export interface Route {
   handler: Middleware | Middleware[]
-  method: string[]
+  method: Array<Method | undefined>
   path: Path
 }
+
+// eslint-disable-next-line @typescript-eslint/no-type-alias, @typescript-eslint/no-explicit-any
+export type Target = any // type-coverage:ignore-line
 
 export type Routes = Route[] & { path: string }
 
@@ -26,14 +29,13 @@ export type Path = string | RegExp
 
 export const RoutesKey = Symbol('routes')
 
-type Router = KoaRouter & {
-  [key: string]: any
-}
+type Router = KoaRouter &
+  Record<Method, (path: Path, ...middlewares: Middleware[]) => void>
 
 // 将当前 routesList 中所有路由注入指定的 router 中
 export const injectAllRoutes = (router: KoaRouter) => {
   while (routesList.length) {
-    const routes = routesList.shift()
+    const routes = routesList.shift()!
 
     routes.forEach(({ handler, method, path = '' }) => {
       if (routes.path && typeof path === 'string') {
@@ -50,7 +52,8 @@ export const injectAllRoutes = (router: KoaRouter) => {
 }
 
 // 路由控制器，添加到 class 声明上
-export const Controller = (target: any) => {
+export const Controller = (target: Target) => {
+  // type-coverage:ignore-next-line
   routesList.push(target.prototype[RoutesKey])
 }
 
@@ -59,20 +62,28 @@ export interface RequestMap {
   path?: Path
 }
 
+export type Decorator = ClassDecorator | MethodDecorator | PropertyDecorator
+
+export type RequestMappingDecorator = (
+  target: Target,
+  propertyKey?: string,
+  descriptor?: PropertyDescriptor,
+) => void
+
 // 路由 url 匹配规则，添加到类成员方法上
-function RequestMapping(requestMap: RequestMap): any
-function RequestMapping(path?: Path, method?: Method | Method[]): any
+function RequestMapping(requestMap: RequestMap): RequestMappingDecorator
 function RequestMapping(
-  path?: Path | RequestMap,
+  path?: Path,
   method?: Method | Method[],
-): any {
+): RequestMappingDecorator
+// eslint-disable-next-line sonarjs/cognitive-complexity
+function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]) {
   if (typeof path === 'string' || path instanceof RegExp) {
     path = {
       method,
       path,
     }
   } else if (method !== undefined) {
-    // tslint:disable-next-line no-console
     console.warn('method should not be passed in')
   }
 
@@ -83,13 +94,14 @@ function RequestMapping(
     ? requestMethod
     : [requestMethod]
 
-  const requestPath = requestMap.path
+  const requestPath = requestMap.path!
 
   return (
-    target: any,
-    propertyKey: string,
-    descriptor: PropertyDescriptor,
+    target: Target,
+    propertyKey?: string,
+    descriptor?: PropertyDescriptor,
   ): void => {
+    // type-coverage:ignore-next-line
     target = propertyKey ? target : target.prototype
 
     if (!target[RoutesKey]) {
@@ -100,7 +112,8 @@ function RequestMapping(
 
     if (propertyKey) {
       routes.push({
-        handler: descriptor.value,
+        // type-coverage:ignore-next-line
+        handler: descriptor!.value,
         method: requestMethods,
         path: requestPath,
       })

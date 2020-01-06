@@ -1,6 +1,6 @@
 import { Context } from 'koa'
 
-import { Controller, Method, RequestMapping } from '../lib'
+import { Controller, Method, RequestMapping } from '..'
 
 @Controller
 export class MethodsController {
@@ -8,7 +8,7 @@ export class MethodsController {
     method: [Method.GET, Method.POST],
     path: '/methods',
   })
-  public methods(ctx: Context) {
+  methods(ctx: Context) {
     ctx.body = 'methods'
   }
 }
