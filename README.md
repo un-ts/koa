@@ -18,6 +18,11 @@
 
 ## TOC <!-- omit in toc -->
 
+- [Install](#install)
+- [Usage](#usage)
+- [Changelog](#changelog)
+- [License](#license)
+
 ## Install
 
 ```sh
@@ -25,7 +30,7 @@
 yarn add @rxts/koa-router-decorators
 
 # npm
-npm i -D @rxts/koa-router-decorators
+npm i @rxts/koa-router-decorators
 ```
 
 ## Usage
