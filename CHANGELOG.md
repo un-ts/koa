@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/rx-ts/koa-router-decorators/compare/v0.1.2...v0.1.3) (2020-01-07)
+
+
+### Bug Fixes
+
+* add index.ts into npm package ([a324b3a](https://github.com/rx-ts/koa-router-decorators/commit/a324b3a7247f6389fc8388ba7611246e03328112))
+
 ### [0.1.2](https://github.com/rx-ts/koa-router-decorators/compare/v0.1.1...v0.1.2) (2020-01-06)
 
 
