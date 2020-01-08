@@ -1,0 +1,22 @@
+{
+  "name": "@rxts/koa",
+  "version": 2,
+  "alias": [
+    "koajs.now.sh"
+  ],
+  "github": {
+    "silent": true
+  },
+  "builds": [
+    {
+      "src": "*.md",
+      "use": "@now/md"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/*",
+      "dest": "README.html"
+    }
+  ]
+}

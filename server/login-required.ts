@@ -1,6 +1,5 @@
+import { Routes, RoutesKey, Target } from '@rxts/koa-router-decorators'
 import { Context } from 'koa'
-
-import { Routes, RoutesKey, Target } from '..'
 
 export const LoginRequired = (
   target: Target,

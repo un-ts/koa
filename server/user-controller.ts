@@ -1,8 +1,7 @@
+import { Controller, RequestMapping } from '@rxts/koa-router-decorators'
 import { Context } from 'koa'
 
 import { LoginRequired } from './login-required'
-
-import { Controller, RequestMapping } from '..'
 
 @Controller
 @RequestMapping('/user')

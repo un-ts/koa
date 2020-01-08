@@ -1,5 +1,13 @@
 checks:
   - name: build-size-watcher
     options:
+      name: 'koa-router-decorators pkg size'
       files:
-        - path: lib/*.*
+        - path: 'packages/router-decorators/lib/**/*.*'
+  - name: type-coverage-watcher
+    options:
+      atLeast: 88
+      ignoreCatch: true
+      ignoreFiles:
+        - '**/*.d.ts'
+      strict: true

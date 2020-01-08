@@ -1,4 +1,15 @@
 {
-  "extends": "./tsconfig.eslint.json",
-  "files": ["index.ts"]
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "incremental": false,
+    "noEmit": true
+  },
+  "references": [
+    // {
+    //   "path": "packages/proxy"
+    // },
+    {
+      "path": "packages/router-decorators"
+    }
+  ]
 }

@@ -1,2 +1,2 @@
 lib
-CHANGELOG.md
+packages/*/CHANGELOG.md

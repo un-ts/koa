@@ -1,9 +1,8 @@
+import { injectAllRoutes } from '@rxts/koa-router-decorators'
+import consola from 'consola'
 import Koa from 'koa'
 import KoaRouter from 'koa-router'
 import KoaSession from 'koa-session'
-import consola from 'consola'
-
-import { injectAllRoutes } from '..'
 
 import './common-controller'
 import './methods-controller'

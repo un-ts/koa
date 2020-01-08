@@ -1,6 +1,5 @@
+import { Controller, Method, RequestMapping } from '@rxts/koa-router-decorators'
 import { Context } from 'koa'
-
-import { Controller, Method, RequestMapping } from '..'
 
 @Controller
 export class MethodsController {

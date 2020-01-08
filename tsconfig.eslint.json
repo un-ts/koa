@@ -1,7 +1,0 @@
-{
-  "extends": "@1stg/tsconfig/lib",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "lib"
-  }
-}
