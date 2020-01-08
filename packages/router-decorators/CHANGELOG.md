@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 0.1.4 (2020-01-08)
+
+
+### Bug Fixes
+
+* **koa-router-decorators:** migrate to monorepo with lerna ([c3b6a79](https://github.com/rx-ts/koa/commit/c3b6a790af58b2429ff8341d4baea921e3cb6ac0))
+
+
+
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
