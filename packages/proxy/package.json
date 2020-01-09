@@ -1,6 +1,6 @@
 {
   "name": "@rxts/koa-proxy",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "`http-proxy` wrapper as Koa middleware",
   "repository": "git+https://github.com/rx-ts/koa.git",
   "homepage": "https://github.com/rx-ts/koa/blob/master/packages/proxy",
