@@ -1,0 +1,44 @@
+{
+  "name": "@rxts/koa-proxy",
+  "version": "0.1.0",
+  "description": "`http-proxy` wrapper as Koa middleware",
+  "repository": "git+https://github.com/rx-ts/koa.git",
+  "homepage": "https://github.com/rx-ts/koa/blob/master/packages/proxy",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/rxts"
+  },
+  "author": "JounQin <admin@1stg.me>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "main": "lib/cjs",
+  "module": "lib",
+  "es2015": "lib/es2015",
+  "fesm5": "lib/esm",
+  "types": "lib",
+  "files": [
+    "!*.tsbuildinfo",
+    "lib",
+    "index.ts"
+  ],
+  "keywords": [
+    "koa",
+    "koa-proxy",
+    "koa2-proxy",
+    "koa-proxies",
+    "koa2-proxies",
+    "koa-http-proxy",
+    "koa2-http-proxy"
+  ],
+  "peerDependencies": {
+    "koa": ">=2.0.0"
+  },
+  "dependencies": {
+    "http-proxy": ">=1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -5,9 +5,9 @@
     "noEmit": true
   },
   "references": [
-    // {
-    //   "path": "packages/proxy"
-    // },
+    {
+      "path": "packages/proxy"
+    },
     {
       "path": "packages/router-decorators"
     }

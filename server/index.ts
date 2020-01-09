@@ -1,25 +1,25 @@
 import { injectAllRoutes } from '@rxts/koa-router-decorators'
 import consola from 'consola'
 import Koa from 'koa'
+import compose from 'koa-compose'
 import KoaRouter from 'koa-router'
-import KoaSession from 'koa-session'
+import session from 'koa-session'
 
-import './common-controller'
-import './methods-controller'
-import './user-controller'
+import './common.controller'
+import './methods.controller'
+import './user.controller'
+// tslint:disable-next-line: ordered-imports
+import './fallback.controller'
 
 const app = new Koa()
-
-app.keys = ['secret']
-
-app.use(KoaSession(app))
 
 const router = new KoaRouter()
 
 injectAllRoutes(router)
 
-app.use(router.routes())
-app.use(router.allowedMethods())
+app.keys = ['secret']
+
+app.use(compose([session(app), router.routes(), router.allowedMethods()]))
 
 const DEFAULT_HOST = 'localhost'
 const DEFAULT_PORT = 3000

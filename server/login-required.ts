@@ -3,8 +3,8 @@ import { Context } from 'koa'
 
 export const LoginRequired = (
   target: Target,
-  propertyKey: string,
-  descriptor: PropertyDescriptor,
+  propertyKey?: string,
+  descriptor?: PropertyDescriptor,
 ) => {
   target = propertyKey ? target : target.prototype
 
@@ -14,7 +14,7 @@ export const LoginRequired = (
     throw new ReferenceError('no routes found')
   }
 
-  let handler = descriptor.value
+  let handler = descriptor!.value
 
   const index = routes.findIndex(route => {
     const routeHandler = route.handler
