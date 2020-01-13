@@ -35,7 +35,7 @@
     "type-coverage": "type-coverage --cache --detail --ignore-catch --ignore-files '**/*.d.ts' --strict"
   },
   "peerDependencies": {
-    "koa": ">=2.0.0",
+    "koa": ">=2.11.0",
     "koa-router": ">=7.0.0"
   },
   "devDependencies": {
