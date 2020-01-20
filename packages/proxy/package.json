@@ -36,7 +36,7 @@
     "koa": ">=2.0.0"
   },
   "dependencies": {
-    "http-proxy": ">=1.0.0"
+    "http-proxy": ">=1.18.0"
   },
   "publishConfig": {
     "access": "public"
