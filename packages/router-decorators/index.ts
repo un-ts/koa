@@ -1,8 +1,12 @@
 import { Middleware } from 'koa'
 import KoaRouter from 'koa-router'
 
+export interface BoundedMiddleware extends Middleware {
+  readonly original?: Middleware
+}
+
 export interface Route {
-  handler: Middleware | Middleware[]
+  handler: BoundedMiddleware | BoundedMiddleware[]
   method: Array<Method | undefined>
   path: Path
 }
@@ -10,7 +14,7 @@ export interface Route {
 // eslint-disable-next-line @typescript-eslint/no-type-alias, @typescript-eslint/no-explicit-any
 export type Target = any // type-coverage:ignore-line
 
-export type Routes = Route[] & { path: string }
+export type Routes = Route[] & { path: Path }
 
 const routesList: Routes[] = []
 
@@ -29,23 +33,21 @@ export type Path = string | RegExp
 
 export const RoutesKey = Symbol('routes')
 
-type Router = KoaRouter &
-  Record<Method, (path: Path, ...middlewares: Middleware[]) => void>
-
 // 将当前 routesList 中所有路由注入指定的 router 中
-export const injectAllRoutes = (router: KoaRouter) => {
+export const injectAllRoutes = <T, R>(router: KoaRouter<T, R>) => {
   while (routesList.length) {
     const routes = routesList.shift()!
 
     routes.forEach(({ handler, method, path = '' }) => {
-      if (routes.path && typeof path === 'string') {
+      if (typeof routes.path === 'string' && typeof path === 'string') {
         path = routes.path + path
       }
 
-      handler = Array.isArray(handler) ? handler : [handler]
-
       method.forEach(m =>
-        (router as Router)[m || Method.GET](path, ...(handler as Middleware[])),
+        router[m || Method.GET](
+          path,
+          ...(Array.isArray(handler) ? handler : [handler]),
+        ),
       )
     })
   }
@@ -98,7 +100,7 @@ function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]) {
 
   return (
     target: Target,
-    propertyKey?: string,
+    propertyKey?: string | symbol,
     descriptor?: PropertyDescriptor,
   ): void => {
     // type-coverage:ignore-next-line
@@ -111,22 +113,33 @@ function RequestMapping(path?: Path | RequestMap, method?: Method | Method[]) {
     const routes: Routes = target[RoutesKey]
 
     if (propertyKey) {
+      descriptor =
+        descriptor || Object.getOwnPropertyDescriptor(target, propertyKey)
+      if (!descriptor || typeof descriptor.value !== 'function') {
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('invalid usage of decorator `RequestMapping`')
+        }
+        return
+      }
+
+      const original: Middleware = descriptor.value
       routes.push({
-        // type-coverage:ignore-next-line
-        handler: descriptor!.value,
+        handler: Object.assign(original.bind(target), { original }),
         method: requestMethods,
         path: requestPath,
       })
-    } else {
-      if (requestMethod) {
-        routes.forEach(
-          route =>
-            (route.method = route.method[0] ? route.method : requestMethods),
-        )
-      }
 
-      routes.path = requestPath as string
+      return
     }
+
+    if (requestMethod) {
+      routes.forEach(
+        route =>
+          (route.method = route.method[0] ? route.method : requestMethods),
+      )
+    }
+
+    routes.path = requestPath as string
   }
 }
 

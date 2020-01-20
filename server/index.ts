@@ -1,6 +1,6 @@
 import { injectAllRoutes } from '@rxts/koa-router-decorators'
 import consola from 'consola'
-import Koa from 'koa'
+import Koa, { DefaultContext, DefaultState } from 'koa'
 import compose from 'koa-compose'
 import KoaRouter from 'koa-router'
 import session from 'koa-session'
@@ -13,7 +13,7 @@ import './fallback.controller'
 
 const app = new Koa()
 
-const router = new KoaRouter()
+const router = new KoaRouter<DefaultState, DefaultContext>()
 
 injectAllRoutes(router)
 

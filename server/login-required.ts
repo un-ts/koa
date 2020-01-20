@@ -1,5 +1,10 @@
-import { Routes, RoutesKey, Target } from '@rxts/koa-router-decorators'
-import { Context } from 'koa'
+import {
+  BoundedMiddleware,
+  Routes,
+  RoutesKey,
+  Target,
+} from '@rxts/koa-router-decorators'
+import { Middleware } from 'koa'
 
 export const LoginRequired = (
   target: Target,
@@ -14,27 +19,34 @@ export const LoginRequired = (
     throw new ReferenceError('no routes found')
   }
 
-  let handler = descriptor!.value
+  const handler: BoundedMiddleware = descriptor!.value
 
   const index = routes.findIndex(route => {
     const routeHandler = route.handler
     return Array.isArray(routeHandler)
-      ? routeHandler.includes(handler)
-      : routeHandler === handler
+      ? routeHandler.find(_ => _.original || _ === handler)
+      : (routeHandler.original || routeHandler) === handler
   })
+
+  if (index === -1) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('route should be registered by `RequestMapping` first')
+    }
+    return
+  }
 
   const oldHandler = routes[index].handler
 
-  handler = Array.isArray(oldHandler) ? oldHandler : [oldHandler]
-
-  routes[index].handler = [
-    (ctx: Context, next: () => void) => {
-      if (!ctx.session!.user) {
+  const newHandler: Middleware[] = [
+    (ctx, next) => {
+      if (!ctx.session.user) {
         return ctx.redirect('/user/login')
       }
 
-      next()
+      return next()
     },
-    ...handler,
+    ...(Array.isArray(oldHandler) ? oldHandler : [oldHandler]),
   ]
+
+  routes[index].handler = newHandler
 }
