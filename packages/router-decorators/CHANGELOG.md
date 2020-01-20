@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/rx-ts/koa/compare/@rxts/koa-router-decorators@0.1.5...@rxts/koa-router-decorators@0.2.0) (2020-01-20)
+
+
+### Features
+
+* **koa-router-decorators:** support binding this context on handler ([981f21d](https://github.com/rx-ts/koa/commit/981f21d91fbefbc0622e0fb1117dd1981cdcab8b))
+
+
+
+
+
 ## [0.1.5](https://github.com/rx-ts/koa/compare/@rxts/koa-router-decorators@0.1.4...@rxts/koa-router-decorators@0.1.5) (2020-01-09)
 
 
