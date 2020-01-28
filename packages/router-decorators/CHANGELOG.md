@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/rx-ts/koa/compare/@rxts/koa-router-decorators@0.2.0...@rxts/koa-router-decorators@0.2.1) (2020-01-28)
+
+**Note:** Version bump only for package @rxts/koa-router-decorators
+
+
+
+
+
 # [0.2.0](https://github.com/rx-ts/koa/compare/@rxts/koa-router-decorators@0.1.5...@rxts/koa-router-decorators@0.2.0) (2020-01-20)
 
 

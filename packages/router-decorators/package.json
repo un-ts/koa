@@ -1,6 +1,6 @@
 {
   "name": "@rxts/koa-router-decorators",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Decorators for koa-router, inspired by Java Annotations of Spring MVC framework",
   "repository": "git+https://github.com/rx-ts/koa.git",
   "homepage": "https://github.com/rx-ts/koa/blob/master/packages/router-decorators",
