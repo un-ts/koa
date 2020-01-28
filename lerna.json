@@ -22,7 +22,9 @@
     },
     "publish": {
       "ignoreChanges": [
-        "*.md"
+        "**/*.md",
+        "**/*.tsbuildinfo",
+        "**/tsconfig.json"
       ]
     }
   }

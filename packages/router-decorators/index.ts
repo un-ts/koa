@@ -1,5 +1,5 @@
+import Router from '@koa/router'
 import { Middleware } from 'koa'
-import KoaRouter from 'koa-router'
 
 export interface BoundedMiddleware extends Middleware {
   readonly original?: Middleware
@@ -34,7 +34,7 @@ export type Path = string | RegExp
 export const RoutesKey = Symbol('routes')
 
 // 将当前 routesList 中所有路由注入指定的 router 中
-export const injectAllRoutes = <T, R>(router: KoaRouter<T, R>) => {
+export const injectAllRoutes = <T, R>(router: Router<T, R>) => {
   while (routesList.length) {
     const routes = routesList.shift()!
 
