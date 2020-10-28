@@ -45,7 +45,7 @@
     "yarn-deduplicate": "^1.1.1"
   },
   "resolutions": {
-    "@babel/core": "^7.8.3",
+    "@babel/core": "^7.12.3",
     "eslint-plugin-prettier": "^3.1.2",
     "typescript": "^3.7.5"
   },
